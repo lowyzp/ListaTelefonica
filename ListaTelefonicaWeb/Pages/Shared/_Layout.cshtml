@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Lista Telefônica</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("PageCSS", required: false)
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-dark mb-3">
+        <div class="container">
+            <a class="navbar-brand text-light">Phonebook @(string.IsNullOrEmpty(ViewData["Title"].ToString()) ? "" : " - " + ViewData["Title"])</a>
+        </div>
+    </nav>
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+
+    <footer class="border-top footer text-muted text-center">
+        <div class="container">
+            &copy; 2021 - ListaTelefonicaWeb
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" defer asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

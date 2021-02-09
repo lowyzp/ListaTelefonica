@@ -1,0 +1,114 @@
+﻿@page
+@model EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="container text-center">
+    <form action="/edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="contactId" value="@Model.Contato.id" />
+        <div class="mb-3 p-2 bg-light border rounded">
+            <div class="row m-1">
+                <div class="col-md-8 text-start mb-3 mt-3">
+                    <label for="editName" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="editName" value="@Model.Contato.name" />
+                </div>
+                <div class="col-md text-start mb-3 mt-3">
+                    <label for="editEmail" class="form-label">Email</label>
+                    <input type="text" class="form-control" name="editEmail" value="@Model.Contato.email" />
+                </div>
+            </div>
+        </div>
+
+        @foreach (Phone phone in Model.Contato.phones)
+        {
+            <div class="mb-3 p-2 bg-light border rounded">
+                <input type="hidden" name="phoneId" value="@phone.id" />
+                <input type="hidden" name="pContactId" value="@phone.contactId" />
+
+                <div class="row m-1">
+                    <div class="col-md text-start mb-3 mt-3">
+                        <label for="editCountryCode" class="form-label">Phone Number</label>
+                        <div class="input-group">
+                            <select name="countryCodeId" class="form-select">
+                                @foreach (CountryCode countryCode in Model.CountryCodes)
+                                {
+                                    @Html.Raw($"<option value='{countryCode.id}' {(countryCode.id == phone.countryCodeId ? "selected" : "")}>")
+                                    @Html.Raw($"{countryCode.name} ({countryCode.dialCode})")
+                                    @Html.Raw("</option>")
+                                }
+                            </select>
+                            <input type="text" class="form-control w-auto" name="editNumber" value="@phone.number" />
+                        </div>
+                    </div>
+                    <div class="col-md text-start mb-3 mt-3">
+                        <label for="editMarker" class="form-label">Marker</label>
+                        <input type="text" class="form-control" name="editMarker" value="@phone.marker" />
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        @foreach (Address address in Model.Contato.addresses)
+        {
+            
+    <div class="mb-3 p-2 bg-light border rounded" data-id="@address.id">
+        <input type="hidden" name="aContactId" value="@address.contactid" />
+        <input type="hidden" class="form-control" name="addressId" value="@address.id" />
+        <div class="text-end">
+            <button type="button" class="btn btn-sm btn-danger rounded-circle btn-excluir" data-id="@address.id" name="remove-address">X</button>
+        </div>
+        <div class="row m-1">
+            <div class="col-md text-start mb-3 mt-3">
+                <label for="editCountry" class="form-label">Country</label>
+                <input type="text" class="form-control" name="editCountry" value="@address.country" />
+            </div>
+            <div class="col-md text-start mb-3 mt-3">
+                <label for="editState" class="form-label">State</label>
+                <input type="text" class="form-control" name="editState" value="@address.state" />
+            </div>
+            <div class="col-md text-start mb-3 mt-3">
+                <label for="editCity" class="form-label">City</label>
+                <input type="text" class="form-control" name="editCity" value="@address.city" />
+            </div>
+            <div class="col-md-2 text-start mb-3 mt-3">
+                <label for="editZip" class="form-label">Zip</label>
+                <input type="text" class="form-control" name="editZip" value="@address.zip" />
+            </div>
+        </div>
+
+
+
+
+        <div class="row m-1">
+            <div class="col-md text-start mb-3 mt-3">
+                <label for="editStreet" class="form-label">Street</label>
+                <input type="text" class="form-control" name="editStreet" value="@address.street" />
+            </div>
+            <div class="col-md text-start mb-3 mt-3">
+                <label for="editNumber" class="form-label">Number</label>
+                <input type="text" class="form-control" name="editNumber" value="@address.number" />
+            </div>
+            <div class="col-md text-start mb-3 mt-3">
+                <label for="editComplement" class="form-label">Complement</label>
+                <input type="text" class="form-control" name="editComplement" value="@address.complement" />
+            </div>
+            <div class="col-md text-start mb-3 mt-3">
+                <label for="editMarker" class="form-label">Marker</label>
+                <input type="text" class="form-control" name="editMarker" value="@address.marker" />
+            </div>
+
+        </div>
+    </div>
+        }
+    <div class="row">
+        <button onclick="window.location.href='index'" type="button" class="btn btn-danger col btn-" name="editReturn" value="">Return</button>
+        <button type="submit" class="btn btn-success col" name="editSubmit" value="">Save Changes</button>
+    </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="js/edit.js"></script>
+}
